@@ -1504,7 +1504,7 @@
 			"name": "Inventory Export",
 			"item": [
 				{
-					"name": "Export your inventory",
+					"name": "Export Your Inventory",
 					"event": [
 						{
 							"listen": "test",
@@ -1549,7 +1549,7 @@
 					"response": []
 				},
 				{
-					"name": "Recent exports",
+					"name": "Recent Exports",
 					"event": [
 						{
 							"listen": "test",
@@ -1590,7 +1590,7 @@
 					"response": []
 				},
 				{
-					"name": "Get an export",
+					"name": "Get An Export",
 					"event": [
 						{
 							"listen": "test",
@@ -1617,14 +1617,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/inventory/export/{id}",
+							"raw": "{{url}}/inventory/export/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"inventory",
 								"export",
-								"{id}"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null,
+									"description": "(required) ID of the export"
+								}
 							]
 						},
 						"description": "Get details about the status of an inventory export.\n\n[https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-an-export](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-an-export)"
@@ -1632,7 +1639,7 @@
 					"response": []
 				},
 				{
-					"name": "Download an export",
+					"name": "Download An Export",
 					"event": [
 						{
 							"listen": "test",
@@ -1659,15 +1666,22 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/inventory/export/{id}/download",
+							"raw": "{{url}}/inventory/export/:id/download",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"inventory",
 								"export",
-								"{id}",
+								":id",
 								"download"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null,
+									"description": "(required) ID of the export to download"
+								}
 							]
 						},
 						"description": "Download the results of an inventory export.\n\n[https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-download-an-export](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-download-an-export)"
@@ -1701,7 +1715,7 @@
 			"name": "Inventory Upload",
 			"item": [
 				{
-					"name": "Add inventory",
+					"name": "Add Inventory",
 					"event": [
 						{
 							"listen": "test",
@@ -1747,7 +1761,7 @@
 					"response": []
 				},
 				{
-					"name": "Change inventory",
+					"name": "Change Inventory",
 					"event": [
 						{
 							"listen": "test",
@@ -1793,7 +1807,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete inventory",
+					"name": "Delete Inventory",
 					"event": [
 						{
 							"listen": "test",
@@ -1839,7 +1853,7 @@
 					"response": []
 				},
 				{
-					"name": "Recent uploads",
+					"name": "Recent Uploads",
 					"event": [
 						{
 							"listen": "test",
@@ -1880,7 +1894,7 @@
 					"response": []
 				},
 				{
-					"name": "Recent upload by ID",
+					"name": "Recent Upload By ID",
 					"event": [
 						{
 							"listen": "test",
@@ -1907,14 +1921,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/inventory/upload/{id}",
+							"raw": "{{url}}/inventory/upload/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"inventory",
 								"upload",
-								"{id}"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null,
+									"description": "(required) ID of the export"
+								}
 							]
 						},
 						"description": "Get details about the status of an inventory upload.\n\n[https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-an-upload](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-an-upload)"
@@ -2016,13 +2037,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}",
+							"raw": "{{url}}/users/:username",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}"
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of whose profile you are requesting"
+								}
 							]
 						},
 						"description": "Retrieve a user by username.\n\nIf authenticated as the requested user, the email key will be visible, and the num_list count will include the user’s private lists.\n\nIf authenticated as the requested user or the user’s collection/wantlist is public, the num_collection / num_wantlist keys will be visible.\n\n[https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile](https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile)"
@@ -2062,13 +2090,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}",
+							"raw": "{{url}}/users/:username",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}"
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of whose profile you are requesting"
+								}
 							]
 						},
 						"description": "Edit a user’s profile data. Authentication as the user is required. Parameters must be filled in a json object inside the body. \n\n[https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile](https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile)"
@@ -2076,7 +2111,7 @@
 					"response": []
 				},
 				{
-					"name": "User submissions",
+					"name": "User Submissions",
 					"event": [
 						{
 							"listen": "test",
@@ -2103,14 +2138,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/submissions",
+							"raw": "{{url}}/users/:username/submissions",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"submissions"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the submissions you are trying to fetch"
+								}
 							]
 						},
 						"description": "Retrieve a user’s submissions by username. Accepts Pagination parameters.\n\n[https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-submissions](https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-submissions)"
@@ -2118,7 +2160,7 @@
 					"response": []
 				},
 				{
-					"name": "User contributions",
+					"name": "User Contributions",
 					"event": [
 						{
 							"listen": "test",
@@ -2145,14 +2187,32 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/contributions",
+							"raw": "{{url}}/users/:username/contributions?sort&sort_order",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"contributions"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": null,
+									"description": "(optional) Sort items by this field.  Valid sort keys are label, artist, title, catno, format, rating, year, added"
+								},
+								{
+									"key": "sort_order",
+									"value": null,
+									"description": "(optional) Sort items in a particular order (asc or desc)"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}"
+								}
 							]
 						},
 						"description": "Retrieve a user’s contributions by username. Accepts Pagination parameters. The Contributions resource represents releases, labels, and artists submitted by a user. \n\n[https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-contributions](https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-contributions)"
