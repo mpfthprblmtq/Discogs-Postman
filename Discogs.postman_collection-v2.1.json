@@ -2246,7 +2246,7 @@
 			"name": "User Collection",
 			"item": [
 				{
-					"name": "Collection",
+					"name": "Collection Folders",
 					"event": [
 						{
 							"listen": "test",
@@ -2273,15 +2273,22 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders",
+							"raw": "{{url}}/users/:username/collection/folders",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to retrieve"
+								}
 							]
 						},
 						"description": "Retrieve a list of folders in a user’s collection. If the collection has been made private by its owner, authentication as the collection owner is required. If you are not authenticated as the collection owner, only folder ID 0 (the “All” folder) will be visible (if the requested user’s collection is public).\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection)"
@@ -2289,7 +2296,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection",
+					"name": "Create Folder In Collection",
 					"event": [
 						{
 							"listen": "test",
@@ -2321,15 +2328,29 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders",
+							"raw": "{{url}}/users/:username/collection/folders?name",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": null,
+									"description": "(optional) The name of the newly-created folder"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to retrieve"
+								}
 							]
 						},
 						"description": "Retrieve a list of folders in a user’s collection. If the collection has been made private by its owner, authentication as the collection owner is required. If you are not authenticated as the collection owner, only folder ID 0 (the “All” folder) will be visible (if the requested user’s collection is public).\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection)"
@@ -2337,7 +2358,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection folder",
+					"name": "Collection Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2364,16 +2385,28 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}"
+								":folder_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to request"
+								},
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to request"
+								}
 							]
 						},
 						"description": "Retrieve metadata about a folder in a user’s collection. If folder_id is not 0, authentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)"
@@ -2381,7 +2414,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection folder",
+					"name": "Edit Collection Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2409,19 +2442,36 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n  \"id\": 392,\n  \"count\": 3,\n  \"name\": \"An Example Folder\",\n  \"resource_url\": \"https://api.discogs.com/users/example/collection/folders/392\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}"
+								":folder_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to request"
+								},
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to modify"
+								}
 							]
 						},
 						"description": "Edit a folder’s metadata. Folders 0 and 1 cannot be renamed. Authentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)"
@@ -2429,7 +2479,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection folder",
+					"name": "Delete Collection Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2460,16 +2510,28 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}"
+								":folder_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to modify"
+								},
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to delete"
+								}
 							]
 						},
 						"description": "Delete a folder from a user’s collection. A folder must be empty before it can be deleted. Authentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)"
@@ -2477,7 +2539,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection items by release",
+					"name": "Collection Item By Release",
 					"event": [
 						{
 							"listen": "test",
@@ -2504,16 +2566,28 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/releases/{release_id}",
+							"raw": "{{url}}/users/:username/collection/releases/:release_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"releases",
-								"{release_id}"
+								":release_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to view"
+								},
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The ID of the release to request"
+								}
 							]
 						},
 						"description": "View the user’s collection folders which contain a specified release. This will also show information about each release instance. The release_id must be non-zero.\n\nAuthentication as the collection owner is required if the owner’s collection is private.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release)"
@@ -2521,7 +2595,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection items by folder",
+					"name": "Collection Item By Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2548,28 +2622,40 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}/releases?sort={sort}&sort_order={sort_order}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases?sort=&sort_order=",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}",
+								":folder_id",
 								"releases"
 							],
 							"query": [
 								{
 									"key": "sort",
-									"value": "{sort}",
-									"description": "Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n• rating\n• added\n• year"
+									"value": "",
+									"description": "(optional) Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n• rating\n• added\n• year"
 								},
 								{
 									"key": "sort_order",
-									"value": "{sort_order}",
-									"description": "Sort items in a particular order (asc or desc)"
+									"value": "",
+									"description": "(optional) Sort items in a particular order (asc or desc)"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to request"
+								},
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to request"
 								}
 							]
 						},
@@ -2578,7 +2664,7 @@
 					"response": []
 				},
 				{
-					"name": "Add to collection folder",
+					"name": "Add Release To Collection Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2609,18 +2695,35 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}/releases/{release_id}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases/:release_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}",
+								":folder_id",
 								"releases",
-								"{release_id}"
+								":release_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to modify"
+								},
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to modify"
+								},
+								{
+									"key": "release_id",
+									"value": null,
+									"description": "(required) The ID of the release you are adding"
+								}
 							]
 						},
 						"description": "Add a release to a folder in a user’s collection.\n\nThe folder_id must be non-zero – you can use 1 for “Uncategorized”.\n\nAuthentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder)"
@@ -2628,7 +2731,7 @@
 					"response": []
 				},
 				{
-					"name": "Change rating of release",
+					"name": "Change Rating Of Release",
 					"event": [
 						{
 							"listen": "test",
@@ -2646,7 +2749,7 @@
 							{
 								"key": "Content-Type",
 								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"value": "application/json"
 							},
 							{
 								"key": "User-Agent",
@@ -2656,23 +2759,57 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"rating\": -1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases/:release_id/instances/:instance_id?rating=",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"collection",
 								"folders",
-								"{folder_id}",
+								":folder_id",
 								"releases",
-								"{release_id}",
+								":release_id",
 								"instances",
-								"{instance_id}"
+								":instance_id"
+							],
+							"query": [
+								{
+									"key": "rating",
+									"value": "",
+									"description": "(optional) The rating of the instance you are supplying"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the collection you are trying to modify"
+								},
+								{
+									"key": "folder_id",
+									"value": "",
+									"description": "(optional) The ID of the folder to modify (This parameter is set in the request body and is set if you want to move the instance to this folder)"
+								},
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The ID of the release you are modifying"
+								},
+								{
+									"key": "instance_id",
+									"value": "",
+									"description": "(required) The ID of the instance"
+								}
 							]
 						},
 						"description": "Change the rating on a release and/or move the instance to another folder.\n\nThis endpoint potentially takes 2 folder_id parameters: one in the URL (which is the folder you are requesting, and is required), and one in the request body (representing the folder you want to move the instance to, which is optional)\n\nAuthentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release](https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release)"
@@ -2680,7 +2817,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete instance from folder",
+					"name": "Delete Instance From Folder",
 					"event": [
 						{
 							"listen": "test",
@@ -2711,7 +2848,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}",
+							"raw": "{{url}}/users/{{username}}/collection/folders/:folder_id/releases/:release_id/instances/:instance_id",
 							"host": [
 								"{{url}}"
 							],
@@ -2720,11 +2857,28 @@
 								"{{username}}",
 								"collection",
 								"folders",
-								"{folder_id}",
+								":folder_id",
 								"releases",
-								"{release_id}",
+								":release_id",
 								"instances",
-								"{instance_id}"
+								":instance_id"
+							],
+							"variable": [
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to modify"
+								},
+								{
+									"key": "release_id",
+									"value": null,
+									"description": "(required) The ID of the release you are modifying"
+								},
+								{
+									"key": "instance_id",
+									"value": null,
+									"description": "(required) The ID of the instance"
+								}
 							]
 						},
 						"description": "Remove an instance of a release from a user’s collection folder.\n\nTo move the release to the “Uncategorized” folder instead, use the POST method.\n\nAuthentication as the collection owner is required.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder)"
@@ -2732,7 +2886,7 @@
 					"response": []
 				},
 				{
-					"name": "List custom fields",
+					"name": "List Custom Fields",
 					"event": [
 						{
 							"listen": "test",
@@ -2759,7 +2913,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}",
+							"raw": "{{url}}/users/{{username}}/collection/fields",
 							"host": [
 								"{{url}}"
 							],
@@ -2767,8 +2921,7 @@
 								"users",
 								"{{username}}",
 								"collection",
-								"folders",
-								"{folder_id}"
+								"fields"
 							]
 						},
 						"description": "Retrieve a list of user-defined collection notes fields. These fields are available on every release in the collection.\n\nIf the collection has been made private by its owner, authentication as the collection owner is required.\n\nIf you are not authenticated as the collection owner, only fields with public set to true will be visible.\n\n[https://www.discogs.com/developers/#page:user-collection,header:user-collection-list-custom-fields](https://www.discogs.com/developers/#page:user-collection,header:user-collection-list-custom-fields)"
@@ -2776,7 +2929,7 @@
 					"response": []
 				},
 				{
-					"name": "Edit fields instance",
+					"name": "Edit Fields Instance",
 					"event": [
 						{
 							"listen": "test",
@@ -2807,7 +2960,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{?value}",
+							"raw": "{{url}}/users/{{username}}/collection/folders/:folder_id/releases/:release_id/instances/:instance_id/fields/:field_id?value",
 							"host": [
 								"{{url}}"
 							],
@@ -2816,18 +2969,41 @@
 								"{{username}}",
 								"collection",
 								"folders",
-								"{folder_id}",
+								":folder_id",
 								"releases",
-								"{release_id}",
+								":release_id",
 								"instances",
-								"{instance_id}",
+								":instance_id",
 								"fields",
-								"{field_id}{"
+								":field_id"
 							],
 							"query": [
 								{
-									"key": "value}",
-									"value": ""
+									"key": "value",
+									"value": null,
+									"description": "(required) The new value of the field. If the field’s type is dropdown, the value must match one of the values in the field’s list of options."
+								}
+							],
+							"variable": [
+								{
+									"key": "folder_id",
+									"value": null,
+									"description": "(required) The ID of the folder to modify"
+								},
+								{
+									"key": "release_id",
+									"value": null,
+									"description": "(required) The ID of the release you are modifying"
+								},
+								{
+									"key": "instance_id",
+									"value": null,
+									"description": "(required) The ID of the instance"
+								},
+								{
+									"key": "field_id",
+									"value": null,
+									"description": "(required) The ID of the field"
 								}
 							]
 						},
@@ -2836,7 +3012,7 @@
 					"response": []
 				},
 				{
-					"name": "Collection value",
+					"name": "Collection Value",
 					"event": [
 						{
 							"listen": "test",
@@ -2932,14 +3108,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/wants",
+							"raw": "{{url}}/users/:username/wants",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"wants"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}"
+								}
 							]
 						},
 						"description": "Returns the list of releases in a user’s wantlist. Accepts Pagination parameters.\n\nBasic information about each release is provided, suitable for display in a list. For detailed information, make another API call to fetch the corresponding release.\n\nIf the wantlist has been made private by its owner, you must be authenticated as the owner to view it.\n\nThe notes field will be visible if you are authenticated as the wantlist owner.\n\n[https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist)"
@@ -2947,7 +3129,7 @@
 					"response": []
 				},
 				{
-					"name": "Add to wantlist",
+					"name": "Add To Wantlist",
 					"event": [
 						{
 							"listen": "test",
@@ -2960,7 +3142,7 @@
 						}
 					],
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -2979,7 +3161,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/wants/{release_id}",
+							"raw": "{{url}}/users/{{username}}/wants/:release_id?notes=&rating=",
 							"host": [
 								"{{url}}"
 							],
@@ -2987,7 +3169,26 @@
 								"users",
 								"{{username}}",
 								"wants",
-								"{release_id}"
+								":release_id"
+							],
+							"query": [
+								{
+									"key": "notes",
+									"value": "",
+									"description": "(optional) User notes to associate with this release"
+								},
+								{
+									"key": "rating",
+									"value": "",
+									"description": "(optional) User's rating of this release, from 0 (unrated) to 5 (best). Defaults to 0"
+								}
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The ID of the release you are adding"
+								}
 							]
 						},
 						"description": "Add a release to a user’s wantlist. Additional parameters must be send as JSON object inside the request body.\n\nAuthentication as the wantlist owner is required.\n\n[https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist)"
@@ -2995,7 +3196,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete release from wantlist",
+					"name": "Delete Release From Wantlist",
 					"event": [
 						{
 							"listen": "test",
@@ -3027,7 +3228,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/wants/{release_id}",
+							"raw": "{{url}}/users/{{username}}/wants/:release_id",
 							"host": [
 								"{{url}}"
 							],
@@ -3035,7 +3236,14 @@
 								"users",
 								"{{username}}",
 								"wants",
-								"{release_id}"
+								":release_id"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The ID of the release you're removing from your wantlist"
+								}
 							]
 						},
 						"description": "Delete a release from a user’s wantlist.\n\nAuthentication as the wantlist owner is required.\n\n[https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist)"
@@ -3096,14 +3304,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/lists",
+							"raw": "{{url}}/users/:username/lists",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"lists"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username of the Lists you are trying to fetch"
+								}
 							]
 						},
 						"description": "Returns a User’s Lists. Private Lists will only display when authenticated as the owner. Accepts Pagination parameters.\n\n[https://www.discogs.com/developers/#page:user-lists,header:user-lists-user-lists](https://www.discogs.com/developers/#page:user-lists,header:user-lists-user-lists)"
@@ -3138,13 +3353,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/lists/{list_id}",
+							"raw": "{{url}}/lists/:list_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"lists",
-								"{list_id}"
+								":list_id"
+							],
+							"variable": [
+								{
+									"key": "list_id",
+									"value": null,
+									"description": "(required) The ID of the List you are trying to fetch"
+								}
 							]
 						},
 						"description": "Returns items from a specified List. Private Lists will only display when authenticated as the owner.\n\n[https://www.discogs.com/developers/#page:user-lists,header:user-lists-list](https://www.discogs.com/developers/#page:user-lists,header:user-lists-list)"
