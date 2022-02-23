@@ -163,7 +163,7 @@
 							"query": [
 								{
 									"key": "USD",
-									"value": null,
+									"value": "",
 									"description": "(optional) Currency for marketplace data. Defaults to the authenticated users currency. Must be one of the following:\nUSD, GBP, EUR, CAD, AUD, JPY, CHF, MXN, BRL, NZD, SEK, ZAR\n(Leave the Postman Value blank)",
 									"disabled": true
 								}
@@ -171,8 +171,8 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "249504",
-									"description": "(Required) The Release ID"
+									"value": "",
+									"description": "(required) The Release ID"
 								}
 							]
 						},
@@ -210,12 +210,12 @@
 							"variable": [
 								{
 									"key": "release_id",
-									"value": "249504",
+									"value": "",
 									"description": "(required) The Release ID"
 								},
 								{
 									"key": "username",
-									"value": "memory",
+									"value": "",
 									"description": "(required) The username of the rating you are trying to request"
 								}
 							]
@@ -882,30 +882,40 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/inventory?status=&sort=&sort_order=",
+							"raw": "{{url}}/users/:username/inventory",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{username}}",
+								":username",
 								"inventory"
 							],
 							"query": [
 								{
 									"key": "status",
 									"value": "",
-									"description": "(optional) Only show items with this status. (Example: \"for sale\")"
+									"description": "(optional) Only show items with this status. (Example: \"for sale\")",
+									"disabled": true
 								},
 								{
 									"key": "sort",
 									"value": "",
-									"description": "(optional) Sort items by this field:\nlisted\nprice\nitem (i.e. the title of the release)\nartist\nlabel\ncatno\naudio\nstatus (when authenticated as the inventory owner)\nlocation (when authenticated as the inventory owner)"
+									"description": "(optional) Sort items by this field:\nlisted\nprice\nitem (i.e. the title of the release)\nartist\nlabel\ncatno\naudio\nstatus (when authenticated as the inventory owner)\nlocation (when authenticated as the inventory owner)",
+									"disabled": true
 								},
 								{
 									"key": "sort_order",
 									"value": "",
-									"description": "(optional) Sort items in a particular order (one of asc, desc)"
+									"description": "(optional) Sort items in a particular order (one of asc, desc)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"description": "(required) The username for whose inventory your are fetching"
 								}
 							]
 						},
@@ -1141,7 +1151,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/:order_id?status=&shipping=",
+							"raw": "{{url}}/marketplace/orders/:order_id",
 							"host": [
 								"{{url}}"
 							],
@@ -1154,12 +1164,14 @@
 								{
 									"key": "status",
 									"value": "",
-									"description": "(optional) The status of the Order you are updating. Must be one of the following: \n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Refund Sent\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request)\nthe order’s current status\n\nFurthermore, the new status must be present in the order’s next_status list. For more information about order statuses, see Edit an order."
+									"description": "(optional) The status of the Order you are updating. Must be one of the following: \n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Refund Sent\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request)\nthe order’s current status\n\nFurthermore, the new status must be present in the order’s next_status list. For more information about order statuses, see Edit an order.",
+									"disabled": true
 								},
 								{
 									"key": "shipping",
 									"value": "",
-									"description": "(optional) The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent."
+									"description": "(optional) The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent.",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -1192,7 +1204,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders?status=&created_after&created_before&archived&sort=&sort_order=",
+							"raw": "{{url}}/marketplace/orders",
 							"host": [
 								"{{url}}"
 							],
@@ -1204,32 +1216,38 @@
 								{
 									"key": "status",
 									"value": "",
-									"description": "(optional) Only show orders with this status. Valid status keys are: \n• All\n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Merged\n• Order Changed\n• Refund Sent\n• Cancelled\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request) Cancelled (Refund Received)\n\n"
+									"description": "(optional) Only show orders with this status. Valid status keys are: \n• All\n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Merged\n• Order Changed\n• Refund Sent\n• Cancelled\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request) Cancelled (Refund Received)\n\n",
+									"disabled": true
 								},
 								{
 									"key": "created_after",
 									"value": null,
-									"description": "(optional) Only show orders created after this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z"
+									"description": "(optional) Only show orders created after this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z",
+									"disabled": true
 								},
 								{
 									"key": "created_before",
 									"value": null,
-									"description": "(optional) Only show orders created before this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z"
+									"description": "(optional) Only show orders created before this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z",
+									"disabled": true
 								},
 								{
 									"key": "archived",
 									"value": null,
-									"description": "(optional) (boolean) Only show orders with a specific archived status. If no key is provided, both statuses are returned. "
+									"description": "(optional) (boolean) Only show orders with a specific archived status. If no key is provided, both statuses are returned. ",
+									"disabled": true
 								},
 								{
 									"key": "sort",
 									"value": "",
-									"description": "(optional) Sort items by this field (see below). Valid sort keys are: \n• id\n• buyer\n• created\n• status\n• last_activity"
+									"description": "(optional) Sort items by this field (see below). Valid sort keys are: \n• id\n• buyer\n• created\n• status\n• last_activity",
+									"disabled": true
 								},
 								{
 									"key": "sort_order",
 									"value": "",
-									"description": "(optional) Sort items in a particular order (one of asc, desc)"
+									"description": "(optional) Sort items in a particular order (one of asc, desc)",
+									"disabled": true
 								}
 							]
 						},
@@ -1295,7 +1313,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/:order_id/messages?message=&status=",
+							"raw": "{{url}}/marketplace/orders/:order_id/messages",
 							"host": [
 								"{{url}}"
 							],
@@ -1308,11 +1326,13 @@
 							"query": [
 								{
 									"key": "message",
-									"value": ""
+									"value": "",
+									"disabled": true
 								},
 								{
 									"key": "status",
-									"value": ""
+									"value": "",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -2094,7 +2114,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/:username/contributions?sort&sort_order",
+							"raw": "{{url}}/users/:username/contributions",
 							"host": [
 								"{{url}}"
 							],
@@ -2107,12 +2127,14 @@
 								{
 									"key": "sort",
 									"value": null,
-									"description": "(optional) Sort items by this field.  Valid sort keys are label, artist, title, catno, format, rating, year, added"
+									"description": "(optional) Sort items by this field.  Valid sort keys are label, artist, title, catno, format, rating, year, added",
+									"disabled": true
 								},
 								{
 									"key": "sort_order",
 									"value": null,
-									"description": "(optional) Sort items in a particular order (asc or desc)"
+									"description": "(optional) Sort items in a particular order (asc or desc)",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -2235,7 +2257,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/:username/collection/folders?name",
+							"raw": "{{url}}/users/:username/collection/folders",
 							"host": [
 								"{{url}}"
 							],
@@ -2249,7 +2271,8 @@
 								{
 									"key": "name",
 									"value": null,
-									"description": "(optional) The name of the newly-created folder"
+									"description": "(optional) The name of the newly-created folder",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -2529,7 +2552,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases?sort=&sort_order=",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases",
 							"host": [
 								"{{url}}"
 							],
@@ -2545,12 +2568,14 @@
 								{
 									"key": "sort",
 									"value": "",
-									"description": "(optional) Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n• rating\n• added\n• year"
+									"description": "(optional) Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n• rating\n• added\n• year",
+									"disabled": true
 								},
 								{
 									"key": "sort_order",
 									"value": "",
-									"description": "(optional) Sort items in a particular order (asc or desc)"
+									"description": "(optional) Sort items in a particular order (asc or desc)",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -2674,7 +2699,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases/:release_id/instances/:instance_id?rating=",
+							"raw": "{{url}}/users/:username/collection/folders/:folder_id/releases/:release_id/instances/:instance_id",
 							"host": [
 								"{{url}}"
 							],
@@ -2693,7 +2718,8 @@
 								{
 									"key": "rating",
 									"value": "",
-									"description": "(optional) The rating of the instance you are supplying"
+									"description": "(optional) The rating of the instance you are supplying",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -3046,7 +3072,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/users/{{username}}/wants/:release_id?notes=&rating=",
+							"raw": "{{url}}/users/{{username}}/wants/:release_id",
 							"host": [
 								"{{url}}"
 							],
@@ -3060,12 +3086,14 @@
 								{
 									"key": "notes",
 									"value": "",
-									"description": "(optional) User notes to associate with this release"
+									"description": "(optional) User notes to associate with this release",
+									"disabled": true
 								},
 								{
 									"key": "rating",
 									"value": "",
-									"description": "(optional) User's rating of this release, from 0 (unrated) to 5 (best). Defaults to 0"
+									"description": "(optional) User's rating of this release, from 0 (unrated) to 5 (best). Defaults to 0",
+									"disabled": true
 								}
 							],
 							"variable": [
