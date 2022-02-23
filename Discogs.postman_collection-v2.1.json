@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7d9408a6-a04b-49aa-94b0-bfe85218b9d7",
+		"_postman_id": "b18825af-778f-44db-a9f2-44f9fe5351b9",
 		"name": "Discogs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									"var querystring = require('querystring')",
 									"",
@@ -73,7 +72,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									"var querystring = require('querystring')",
 									"",
@@ -134,7 +132,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6c3c9cc4-cdc1-4355-8b48-a37663f1ab74",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -144,21 +141,19 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "719b1629-28b7-48bf-a7be-650de3bea15c",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Database",
 			"item": [
 				{
-					"name": "Releases",
+					"name": "Release",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -175,18 +170,27 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/releases/{release_id}?{curr_abbr}",
+							"raw": "{{url}}/releases/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"releases",
-								"{release_id}"
+								":id"
 							],
 							"query": [
 								{
-									"key": "{curr_abbr}",
-									"value": null
+									"key": "USD",
+									"value": null,
+									"description": "(optional) Currency for marketplace data. Defaults to the authenticated users currency. Must be one of the following:\nUSD, GBP, EUR, CAD, AUD, JPY, CHF, MXN, BRL, NZD, SEK, ZAR\n(Leave the Postman Value blank)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "249504",
+									"description": "(Required) The Release ID"
 								}
 							]
 						},
@@ -195,7 +199,7 @@
 					"response": []
 				},
 				{
-					"name": "Release rating by user",
+					"name": "Release Rating By User",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -211,15 +215,27 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/releases/{release_id}/rating/{username}",
+							"raw": "{{url}}/releases/:release_id/rating/:username",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"releases",
-								"{release_id}",
+								":release_id",
 								"rating",
-								"{username}"
+								":username"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "249504",
+									"description": "(required) The Release ID"
+								},
+								{
+									"key": "username",
+									"value": "memory",
+									"description": "(required) The username of the rating you are trying to request"
+								}
 							]
 						},
 						"description": "Retrieves the release’s rating for a given user.\n\n[https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)"
@@ -227,7 +243,7 @@
 					"response": []
 				},
 				{
-					"name": "Release rating by user",
+					"name": "Release Rating By User",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -245,18 +261,25 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"rating\": 5\n}"
 						},
 						"url": {
-							"raw": "{{url}}/releases/{release_id}/rating/{{username}}",
+							"raw": "{{url}}/releases/:release_id/rating/{{username}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"releases",
-								"{release_id}",
+								":release_id",
 								"rating",
 								"{{username}}"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The Release ID"
+								}
 							]
 						},
 						"description": "Updates the release’s rating for a given user. Authentication as the user is required. \n\nThe \"rating\" parameter must be sent inside a JSON object inside the request body.\n\n[https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)"
@@ -264,7 +287,7 @@
 					"response": []
 				},
 				{
-					"name": "Release rating by user",
+					"name": "Release Rating By User",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -284,15 +307,22 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/releases/{release_id}/rating/{{username}}",
+							"raw": "{{url}}/releases/:release_id/rating/{{username}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"releases",
-								"{release_id}",
+								":release_id",
 								"rating",
 								"{{username}}"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The Release ID"
+								}
 							]
 						},
 						"description": "Deletes the release’s rating for a given user. Authentication as the user is required.\n\n[https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)"
@@ -300,7 +330,7 @@
 					"response": []
 				},
 				{
-					"name": "Community release rating",
+					"name": "Community Release Rating",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -317,14 +347,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/releases/{release_id}/rating",
+							"raw": "{{url}}/releases/:release_id/rating",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"releases",
-								"{release_id}",
+								":release_id",
 								"rating"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": null,
+									"description": "(required) The Release ID"
+								}
 							]
 						},
 						"description": "The Community Release Rating endpoint retrieves the average rating and the total number of user ratings for a given release.\n\n[https://www.discogs.com/developers/#page:database,header:database-community-release-rating](https://www.discogs.com/developers/#page:database,header:database-community-release-rating)"
@@ -332,7 +369,45 @@
 					"response": []
 				},
 				{
-					"name": "Master release",
+					"name": "Release Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "{{user_agent}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/releases/:release_id/stats",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"releases",
+								":release_id",
+								"stats"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": null,
+									"description": "(required) The Release ID"
+								}
+							]
+						},
+						"description": "The Release Stats endpoint retrieves the total number of “haves” (in the community’s collections) and “wants” (in the community’s wantlists) for a given release.\n\nhttps://www.discogs.com/developers#page:database,header:database-release-stats"
+					},
+					"response": []
+				},
+				{
+					"name": "Master Release",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -349,13 +424,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/masters/{master_id}",
+							"raw": "{{url}}/masters/:master_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"masters",
-								"{master_id}"
+								":master_id"
+							],
+							"variable": [
+								{
+									"key": "master_id",
+									"value": null,
+									"description": "(required) The Master ID"
+								}
 							]
 						},
 						"description": "The Master resource represents a set of similar Releases. Masters (also known as “master releases”) have a “main release” which is often the chronologically earliest.\n\n[https://www.discogs.com/developers/#page:database,header:database-master-release](https://www.discogs.com/developers/#page:database,header:database-master-release)"
@@ -363,7 +445,7 @@
 					"response": []
 				},
 				{
-					"name": "Master release versions",
+					"name": "Master Release Versions",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -380,23 +462,70 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/masters/{master_id}/versions?page={page}&per_page={per_page}",
+							"raw": "{{url}}/masters/:master_id/versions",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"masters",
-								"{master_id}",
+								":master_id",
 								"versions"
 							],
 							"query": [
 								{
 									"key": "page",
-									"value": "{page}"
+									"value": "",
+									"description": "(optional) The page you want to request",
+									"disabled": true
 								},
 								{
 									"key": "per_page",
-									"value": "{per_page}"
+									"value": "",
+									"description": "(optional) The number of items per page",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "",
+									"description": "(optional) The format to filter",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": null,
+									"description": "(optional) The label to filter",
+									"disabled": true
+								},
+								{
+									"key": "released",
+									"value": null,
+									"description": "(optional) The release year to filter",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": null,
+									"description": "(optional) The country to filter",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": null,
+									"description": "(optional) Sort items by this field:\nreleased (i.e. year of the release)\ntitle (i.e. title of the release)\nformat\nlabel\ncatno (i.e. catalog number of the release)\ncountry",
+									"disabled": true
+								},
+								{
+									"key": "sort_order",
+									"value": null,
+									"description": "(optional) Sort items in a particular order (one of asc, desc)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "master_id",
+									"value": "",
+									"description": "(required) The Master ID"
 								}
 							]
 						},
@@ -422,13 +551,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/artists/{artist_id}",
+							"raw": "{{url}}/artists/:artist_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"artists",
-								"{artist_id}"
+								":artist_id"
+							],
+							"variable": [
+								{
+									"key": "artist_id",
+									"value": null,
+									"description": "(required) The Artist ID"
+								}
 							]
 						},
 						"description": "Get an artist\n\n[https://www.discogs.com/developers/#page:database,header:database-artist](https://www.discogs.com/developers/#page:database,header:database-artist)"
@@ -436,7 +572,7 @@
 					"response": []
 				},
 				{
-					"name": "Artist releases",
+					"name": "Artist Releases",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -453,23 +589,34 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/artists/21262/releases?sort={sort}&sort_order={sort_order}",
+							"raw": "{{url}}/artists/:artist_id/releases",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"artists",
-								"21262",
+								":artist_id",
 								"releases"
 							],
 							"query": [
 								{
 									"key": "sort",
-									"value": "{sort}"
+									"value": "",
+									"description": "(optional) Sort items by this field:\nyear (i.e. year of the release)\ntitle (i.e. title of the release)\nformat",
+									"disabled": true
 								},
 								{
 									"key": "sort_order",
-									"value": "{sort_order}"
+									"value": "",
+									"description": "(optional) Sort items in a particular order (one of asc, desc)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "artist_id",
+									"value": null,
+									"description": "(required) The Artist ID"
 								}
 							]
 						},
@@ -495,13 +642,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/labels/{label_id}",
+							"raw": "{{url}}/labels/:label_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"labels",
-								"{label_id}"
+								":label_id"
+							],
+							"variable": [
+								{
+									"key": "label_id",
+									"value": null,
+									"description": "(required) The Label ID"
+								}
 							]
 						},
 						"description": "Get a label\n\n[https://www.discogs.com/developers/#page:database,header:database-label](https://www.discogs.com/developers/#page:database,header:database-label)"
@@ -509,7 +663,7 @@
 					"response": []
 				},
 				{
-					"name": "All label releases",
+					"name": "All Label Releases",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -526,23 +680,34 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/labels/{label_id}/releases?page={page}&per_page={per_page}",
+							"raw": "{{url}}/labels/:label_id/releases",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"labels",
-								"{label_id}",
+								":label_id",
 								"releases"
 							],
 							"query": [
 								{
 									"key": "page",
-									"value": "{page}"
+									"value": "",
+									"description": "(optional) The page you want to request",
+									"disabled": true
 								},
 								{
 									"key": "per_page",
-									"value": "{per_page}"
+									"value": "",
+									"description": "(optional) The number of items per page",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "label_id",
+									"value": null,
+									"description": "(required) The Label ID"
 								}
 							]
 						},
@@ -568,7 +733,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/database/search?query={page}&type={type}",
+							"raw": "{{url}}/database/search",
 							"host": [
 								"{{url}}"
 							],
@@ -579,11 +744,111 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "{page}"
+									"value": "",
+									"description": "(optional) Your search query",
+									"disabled": true
 								},
 								{
 									"key": "type",
-									"value": "{type}"
+									"value": "",
+									"description": "(optional) One of: \"release,\" \"master,\" \"artist,\" \"label\"",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": null,
+									"description": "(optional) Search by combined “Artist Name - Release Title” title field.",
+									"disabled": true
+								},
+								{
+									"key": "release_title",
+									"value": null,
+									"description": "(optional) Search release titles.",
+									"disabled": true
+								},
+								{
+									"key": "credit",
+									"value": null,
+									"description": "(optional) Search release credits.",
+									"disabled": true
+								},
+								{
+									"key": "artist",
+									"value": null,
+									"description": "(optional) Search artist names.",
+									"disabled": true
+								},
+								{
+									"key": "anv",
+									"value": null,
+									"description": "(optional) Search artist ANV.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": null,
+									"description": "(optional) Search label names.",
+									"disabled": true
+								},
+								{
+									"key": "genre",
+									"value": null,
+									"description": "(optional) Search genres.",
+									"disabled": true
+								},
+								{
+									"key": "style",
+									"value": null,
+									"description": "(optional) Search styles.",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": null,
+									"description": "(optional) Search release country.",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": null,
+									"description": "(optional) Search release year.",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": null,
+									"description": "(optional) Search formats.",
+									"disabled": true
+								},
+								{
+									"key": "catno",
+									"value": null,
+									"description": "(optional) Search catalog number.",
+									"disabled": true
+								},
+								{
+									"key": "barcode",
+									"value": null,
+									"description": "(optional) Search barcodes.",
+									"disabled": true
+								},
+								{
+									"key": "track",
+									"value": null,
+									"description": "(optional) Search track titles.",
+									"disabled": true
+								},
+								{
+									"key": "submitter",
+									"value": null,
+									"description": "(optional) Search submitter username.",
+									"disabled": true
+								},
+								{
+									"key": "contributer",
+									"value": null,
+									"description": "(optional) Search contributor usernames.",
+									"disabled": true
 								}
 							]
 						},
@@ -597,7 +862,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "af7ce01b-7da1-4935-86c3-1cc7940883c0",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -607,15 +871,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a58e171e-e71c-4c65-b870-e69f90750af5",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Marketplace",
@@ -638,7 +900,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/users/{{username}}/inventory?string={status}&sort={sort}&sort_order={sort_order}",
+							"raw": "{{url}}/users/{{username}}/inventory?status=&sort=&sort_order=",
 							"host": [
 								"{{url}}"
 							],
@@ -649,16 +911,19 @@
 							],
 							"query": [
 								{
-									"key": "string",
-									"value": "{status}"
+									"key": "status",
+									"value": "",
+									"description": "(optional) Only show items with this status. (Example: \"for sale\")"
 								},
 								{
 									"key": "sort",
-									"value": "{sort}"
+									"value": "",
+									"description": "(optional) Sort items by this field:\nlisted\nprice\nitem (i.e. the title of the release)\nartist\nlabel\ncatno\naudio\nstatus (when authenticated as the inventory owner)\nlocation (when authenticated as the inventory owner)"
 								},
 								{
 									"key": "sort_order",
-									"value": "{sort_order}"
+									"value": "",
+									"description": "(optional) Sort items in a particular order (one of asc, desc)"
 								}
 							]
 						},
@@ -667,7 +932,7 @@
 					"response": []
 				},
 				{
-					"name": "Listing",
+					"name": "Get Listing",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -684,19 +949,28 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/listings/{listing_id}?curr_abbr={curr_abbr}",
+							"raw": "{{url}}/marketplace/listings/:listing_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"listings",
-								"{listing_id}"
+								":listing_id"
 							],
 							"query": [
 								{
 									"key": "curr_abbr",
-									"value": "{curr_abbr}"
+									"value": "",
+									"description": "(optional) Currency for marketplace data. Defaults to the authenticated users currency. Must be one of the following:\nUSD GBP EUR CAD AUD JPY CHF MXN BRL NZD SEK ZAR",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "listing_id",
+									"value": null,
+									"description": "(required) The ID of the listing you are fetching"
 								}
 							]
 						},
@@ -705,7 +979,7 @@
 					"response": []
 				},
 				{
-					"name": "Listing",
+					"name": "Edit Listing",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -713,7 +987,7 @@
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"value": "application/json"
 							},
 							{
 								"key": "User-Agent",
@@ -721,71 +995,33 @@
 								"value": "{{user_agent}}"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"release_id\": 0,\n    \"condition\": \"\",\n    \"sleeve_condition\": \"\",\n    \"price\": -1,\n    \"comments\": \"\",\n    \"allow_offers\": true,\n    \"status\": \"\",\n    \"external_id\": \"\",\n    \"location\": \"\",\n    \"weight\": -1,\n    \"format_quantity\": 1\n}"
+						},
 						"url": {
-							"raw": "{{url}}/marketplace/listings/{listing_id}?release_id={release_id}&condition={condition}&sleeve_condition={sleeve_condition}&price={price}&comments={comments}&allow_offers={allow_offers}&status={status}&external_id={external_id}&location={location}&weight={weight}&format_quantity={format_quantity}",
+							"raw": "{{url}}/marketplace/listings/:listing_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"listings",
-								"{listing_id}"
+								":listing_id"
 							],
 							"query": [
 								{
-									"key": "release_id",
-									"value": "{release_id}",
-									"description": "The ID of the listing you are fetching\n"
-								},
+									"key": "USD",
+									"value": null,
+									"description": "(optional) Currency for marketplace data. Defaults to the authenticated users currency. Must be one of the following:\nUSD, GBP, EUR, CAD, AUD, JPY, CHF, MXN, BRL, NZD, SEK, ZAR\n(Leave the Postman Value blank)",
+									"disabled": true
+								}
+							],
+							"variable": [
 								{
-									"key": "condition",
-									"value": "{condition}",
-									"description": "The condition of the release you are posting. Must be one of the following: \n• Mint (M)\n• Near Mint (NM or M-)\n• Very Good Plus (VG+)\n• Very Good (VG)\n• Good Plus (G+)\n• Good (G)\n• Fair (F)\n• Poor (P)"
-								},
-								{
-									"key": "sleeve_condition",
-									"value": "{sleeve_condition}",
-									"description": "The condition of the sleeve of the item you are posting. Must be one of the following: \n• Mint (M)\n• Near Mint (NM or M-)\n• Very Good Plus (VG+)\n• Very Good (VG)\n• Good Plus (G+)\n• Good (G)\n• Fair (F)\n• Poor (P)\n• Generic Not Graded No Cover"
-								},
-								{
-									"key": "price",
-									"value": "{price}",
-									"description": "The price of the item (in the seller’s currency)."
-								},
-								{
-									"key": "comments",
-									"value": "{comments}",
-									"description": "Any remarks about the item that will be displayed to buyers."
-								},
-								{
-									"key": "allow_offers",
-									"value": "{allow_offers}",
-									"description": "Whether or not to allow buyers to make offers on the item. Defaults to false."
-								},
-								{
-									"key": "status",
-									"value": "{status}",
-									"description": "The status of the listing. Defaults to For Sale. Options are For Sale (the listing is ready to be shown on the Marketplace) and Draft (the listing is not ready for public display)."
-								},
-								{
-									"key": "external_id",
-									"value": "{external_id}",
-									"description": "A freeform field that can be used for the seller’s own reference. Information stored here will not be displayed to anyone other than the seller. This field is called “Private Comments” on the Discogs website."
-								},
-								{
-									"key": "location",
-									"value": "{location}",
-									"description": "A freeform field that is intended to help identify an item’s physical storage location. Information stored here will not be displayed to anyone other than the seller. This field will be visible on the inventory management page and will be available in inventory exports via the website."
-								},
-								{
-									"key": "weight",
-									"value": "{weight}",
-									"description": "The weight, in grams, of this listing, for the purpose of calculating shipping. Set this field to auto to have the weight automatically estimated for you."
-								},
-								{
-									"key": "format_quantity",
-									"value": "{format_quantity}",
-									"description": "The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you."
+									"key": "listing_id",
+									"value": null,
+									"description": "(required) The ID of the listing you are fetching"
 								}
 							]
 						},
@@ -794,7 +1030,7 @@
 					"response": []
 				},
 				{
-					"name": "Listing",
+					"name": "Delete Listing",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -811,19 +1047,28 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/listings/{listing_id}?curr_abbr={curr_abbr}",
+							"raw": "{{url}}/marketplace/listings/:listing_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"listings",
-								"{listing_id}"
+								":listing_id"
 							],
 							"query": [
 								{
-									"key": "curr_abbr",
-									"value": "{curr_abbr}"
+									"key": "USD",
+									"value": null,
+									"description": "(optional) Currency for marketplace data. Defaults to the authenticated users currency. Must be one of the following:\nUSD, GBP, EUR, CAD, AUD, JPY, CHF, MXN, BRL, NZD, SEK, ZAR\n(Leave the Postman Value blank)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "listing_id",
+									"value": "",
+									"description": "The ID of the listing you are fetching"
 								}
 							]
 						},
@@ -832,7 +1077,7 @@
 					"response": []
 				},
 				{
-					"name": "New listing",
+					"name": "New Listing",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -840,7 +1085,7 @@
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"type": "text",
-								"value": "application/x-www-form-urlencoded"
+								"value": "application/json"
 							},
 							{
 								"key": "User-Agent",
@@ -848,71 +1093,18 @@
 								"value": "{{user_agent}}"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"release_id\": 0,\n    \"condition\": \"\",\n    \"sleeve_condition\": \"\",\n    \"price\": 0,\n    \"comments\": \"\",\n    \"allow_offers\": ,\n    \"status\": \"\",\n    \"external_id\": \"\",\n    \"location\": \"\",\n    \"weight\": 0,\n    \"format_quantity\": 1\n}"
+						},
 						"url": {
-							"raw": "{{url}}/marketplace/listings?release_id={release_id}&condition={condition}&sleeve_condition={sleeve_condition}&price={price}&comments={comments}&allow_offers={allow_offers}&status={status}&external_id={external_id}&location={location}&weight={weight}&format_quantity={format_quantity}",
+							"raw": "{{url}}/marketplace/listings",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"listings"
-							],
-							"query": [
-								{
-									"key": "release_id",
-									"value": "{release_id}",
-									"description": "The ID of the listing you are fetching\n"
-								},
-								{
-									"key": "condition",
-									"value": "{condition}",
-									"description": "The condition of the release you are posting. Must be one of the following: \n• Mint (M)\n• Near Mint (NM or M-)\n• Very Good Plus (VG+)\n• Very Good (VG)\n• Good Plus (G+)\n• Good (G)\n• Fair (F)\n• Poor (P)"
-								},
-								{
-									"key": "sleeve_condition",
-									"value": "{sleeve_condition}",
-									"description": "The condition of the sleeve of the item you are posting. Must be one of the following: \n• Mint (M)\n• Near Mint (NM or M-)\n• Very Good Plus (VG+)\n• Very Good (VG)\n• Good Plus (G+)\n• Good (G)\n• Fair (F)\n• Poor (P)\n• Generic Not Graded No Cover"
-								},
-								{
-									"key": "price",
-									"value": "{price}",
-									"description": "The price of the item (in the seller’s currency)."
-								},
-								{
-									"key": "comments",
-									"value": "{comments}",
-									"description": "Any remarks about the item that will be displayed to buyers."
-								},
-								{
-									"key": "allow_offers",
-									"value": "{allow_offers}",
-									"description": "Whether or not to allow buyers to make offers on the item. Defaults to false."
-								},
-								{
-									"key": "status",
-									"value": "{status}",
-									"description": "The status of the listing. Defaults to For Sale. Options are For Sale (the listing is ready to be shown on the Marketplace) and Draft (the listing is not ready for public display)."
-								},
-								{
-									"key": "external_id",
-									"value": "{external_id}",
-									"description": "A freeform field that can be used for the seller’s own reference. Information stored here will not be displayed to anyone other than the seller. This field is called “Private Comments” on the Discogs website."
-								},
-								{
-									"key": "location",
-									"value": "{location}",
-									"description": "A freeform field that is intended to help identify an item’s physical storage location. Information stored here will not be displayed to anyone other than the seller. This field will be visible on the inventory management page and will be available in inventory exports via the website."
-								},
-								{
-									"key": "weight",
-									"value": "{weight}",
-									"description": "The weight, in grams, of this listing, for the purpose of calculating shipping. Set this field to auto to have the weight automatically estimated for you."
-								},
-								{
-									"key": "format_quantity",
-									"value": "{format_quantity}",
-									"description": "The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you."
-								}
 							]
 						},
 						"description": "Create a Marketplace listing. Authentication is required; the listing will be added to the authenticated user’s Inventory.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-new-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-new-listing)"
@@ -920,7 +1112,7 @@
 					"response": []
 				},
 				{
-					"name": "Order",
+					"name": "Get Order",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -937,14 +1129,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/{order_id}",
+							"raw": "{{url}}/marketplace/orders/:order_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"orders",
-								"{order_id}"
+								":order_id"
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": null,
+									"description": "(required) The ID of the order you are fetching"
+								}
 							]
 						},
 						"description": "View the data associated with a listing.\nIf the authorized user is the listing owner the listing will include the weight, format_quantity, external_id, and location keys. If the user is authorized, the listing will contain a in_cart boolean field indicating whether or not this listing is in their cart.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)"
@@ -952,7 +1151,7 @@
 					"response": []
 				},
 				{
-					"name": "Order",
+					"name": "Edit Order",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -969,34 +1168,41 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/{order_id}?status={status}&shipping={shipping}",
+							"raw": "{{url}}/marketplace/orders/:order_id?status=&shipping=",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"orders",
-								"{order_id}"
+								":order_id"
 							],
 							"query": [
 								{
 									"key": "status",
-									"value": "{status}",
-									"description": "The status of the Order you are updating. Must be one of the following: \n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Refund Sent\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request)\nthe order’s current status\n\nFurthermore, the new status must be present in the order’s next_status list. For more information about order statuses, see Edit an order."
+									"value": "",
+									"description": "(optional) The status of the Order you are updating. Must be one of the following: \n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Refund Sent\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request)\nthe order’s current status\n\nFurthermore, the new status must be present in the order’s next_status list. For more information about order statuses, see Edit an order."
 								},
 								{
 									"key": "shipping",
-									"value": "{shipping}",
-									"description": "The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent."
+									"value": "",
+									"description": "(optional) The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent."
+								}
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": null,
+									"description": "(required) The ID of the order you are fetching"
 								}
 							]
 						},
-						"description": "dit the data associated with an order.\nAuthentication as the seller is required.\nThe response contains a next_status key – an array of valid next statuses for this order, which you can display to the user in (for example) a dropdown control. This also renders your application more resilient to any future changes in the order status logic.\nChanging the order status using this resource will always message the buyer with:\n\nSeller changed status from Old Status to New Status\n\nand does not provide a facility for including a custom message along with the change. For more fine-grained control, use the Add a new message resource, which allows you to simultaneously add a message and change the order status.\nIf the order status is neither cancelled, Payment Received, nor Shipped, you can change the shipping. Doing so will send an invoice to the buyer and set the order status to Invoice Sent. (For that reason, you cannot set the shipping and the order status in the same request.)\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)"
+						"description": "Edit the data associated with an order.\nAuthentication as the seller is required.\nThe response contains a next_status key – an array of valid next statuses for this order, which you can display to the user in (for example) a dropdown control. This also renders your application more resilient to any future changes in the order status logic.\nChanging the order status using this resource will always message the buyer with:\n\nSeller changed status from Old Status to New Status\n\nand does not provide a facility for including a custom message along with the change. For more fine-grained control, use the Add a new message resource, which allows you to simultaneously add a message and change the order status.\nIf the order status is neither cancelled, Payment Received, nor Shipped, you can change the shipping. Doing so will send an invoice to the buyer and set the order status to Invoice Sent. (For that reason, you cannot set the shipping and the order status in the same request.)\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)"
 					},
 					"response": []
 				},
 				{
-					"name": "List orders",
+					"name": "List Orders",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1013,7 +1219,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders?status={status}&sort={sort}&sort_order={sort_order}",
+							"raw": "{{url}}/marketplace/orders?status=&created_after&created_before&archived&sort=&sort_order=",
 							"host": [
 								"{{url}}"
 							],
@@ -1024,18 +1230,33 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "{status}",
-									"description": "Only show orders with this status. Valid status keys are: \n• All\n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Merged\n• Order Changed\n• Refund Sent\n• Cancelled\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request) Cancelled (Refund Received)\n\n"
+									"value": "",
+									"description": "(optional) Only show orders with this status. Valid status keys are: \n• All\n• New Order\n• Buyer Contacted\n• Invoice Sent\n• Payment Pending\n• Payment Received\n• Shipped\n• Merged\n• Order Changed\n• Refund Sent\n• Cancelled\n• Cancelled (Non-Paying Buyer)\n• Cancelled (Item Unavailable)\n• Cancelled (Per Buyer's Request) Cancelled (Refund Received)\n\n"
+								},
+								{
+									"key": "created_after",
+									"value": null,
+									"description": "(optional) Only show orders created after this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z"
+								},
+								{
+									"key": "created_before",
+									"value": null,
+									"description": "(optional) Only show orders created before this ISO 8601 timestamp.\nExample: 2019-06-24T20:58:58Z"
+								},
+								{
+									"key": "archived",
+									"value": null,
+									"description": "(optional) (boolean) Only show orders with a specific archived status. If no key is provided, both statuses are returned. "
 								},
 								{
 									"key": "sort",
-									"value": "{sort}",
-									"description": "Sort items by this field (see below). Valid sort keys are: \n• id\n• buyer\n• created\n• status\n• last_activity"
+									"value": "",
+									"description": "(optional) Sort items by this field (see below). Valid sort keys are: \n• id\n• buyer\n• created\n• status\n• last_activity"
 								},
 								{
 									"key": "sort_order",
-									"value": "{sort_order}",
-									"description": "Sort items in a particular order (one of asc, desc)"
+									"value": "",
+									"description": "(optional) Sort items in a particular order (one of asc, desc)"
 								}
 							]
 						},
@@ -1044,7 +1265,7 @@
 					"response": []
 				},
 				{
-					"name": "List order messages",
+					"name": "List Order Messages",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1061,15 +1282,22 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/{order_id}/messages",
+							"raw": "{{url}}/marketplace/orders/:order_id/messages",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"orders",
-								"{order_id}",
+								":order_id",
 								"messages"
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": null,
+									"description": "(required) the ID of the order you are fetching"
+								}
 							]
 						},
 						"description": "Returns a list of the order’s messages with the most recent first. Accepts Pagination parameters.\nAuthentication as the seller is required.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages](https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages)"
@@ -1077,7 +1305,7 @@
 					"response": []
 				},
 				{
-					"name": "List order messages",
+					"name": "List Order Messages",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1094,24 +1322,31 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/orders/{order_id}/messages?message={message}&status={status}",
+							"raw": "{{url}}/marketplace/orders/:order_id/messages?message=&status=",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"orders",
-								"{order_id}",
+								":order_id",
 								"messages"
 							],
 							"query": [
 								{
 									"key": "message",
-									"value": "{message}"
+									"value": ""
 								},
 								{
 									"key": "status",
-									"value": "{status}"
+									"value": ""
+								}
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": null,
+									"description": "(required) the ID of the order you are fetching"
 								}
 							]
 						},
@@ -1137,14 +1372,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/fee/{price}",
+							"raw": "{{url}}/marketplace/fee/:price",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"fee",
-								"{price}"
+								":price"
+							],
+							"variable": [
+								{
+									"key": "price",
+									"value": "",
+									"description": "(optional) The price to calculate a fee from"
+								}
 							]
 						},
 						"description": "The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee](https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee\n)"
@@ -1152,7 +1394,7 @@
 					"response": []
 				},
 				{
-					"name": "Fee with currency",
+					"name": "Fee With Currency",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1169,15 +1411,27 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/fee/{price}/{currency}",
+							"raw": "{{url}}/marketplace/fee/:price/:currency",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"fee",
-								"{price}",
-								"{currency}"
+								":price",
+								":currency"
+							],
+							"variable": [
+								{
+									"key": "price",
+									"value": null,
+									"description": "(optional) The price to calculate a fee from"
+								},
+								{
+									"key": "currency",
+									"value": null,
+									"description": "(optional) Defaults to USD. Must be one of the following:\nUSD, GBP, EUR, CAD, AUD, JPY, CHF, MXN, BRL, NZD, SEK, ZAR"
+								}
 							]
 						},
 						"description": "The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace given a particular currency.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-with-currency](https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-with-currency)"
@@ -1185,7 +1439,7 @@
 					"response": []
 				},
 				{
-					"name": "Price suggestions",
+					"name": "Price Suggestions",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1202,14 +1456,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/marketplace/price_suggestions/{release_id}",
+							"raw": "{{url}}/marketplace/price_suggestions/:release_id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"marketplace",
 								"price_suggestions",
-								"{release_id}"
+								":release_id"
+							],
+							"variable": [
+								{
+									"key": "release_id",
+									"value": "",
+									"description": "(required) The release ID to calculate a price from"
+								}
 							]
 						},
 						"description": "Retrieve price suggestions for the provided Release ID. If no suggestions are available, an empty object will be returned.\nAuthentication is required, and the user needs to have filled out their seller settings. Suggested prices will be denominated in the user’s selling currency.\n\n[https://www.discogs.com/developers/#page:marketplace,header:marketplace-price-suggestions](https://www.discogs.com/developers/#page:marketplace,header:marketplace-price-suggestions)"
@@ -1222,7 +1483,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "702ada7b-7dcf-44a0-8c1f-a05621508e9d",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1232,15 +1492,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d0e6ba63-fefa-46f7-8aec-8cb780e45c55",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Inventory Export",
@@ -1251,7 +1509,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1297,7 +1554,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1339,7 +1595,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1382,7 +1637,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1426,7 +1680,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "5f6b6b23-c5c5-4b3e-869c-2003a0026ee3",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1436,15 +1689,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4389dd1d-5d38-4bb3-91e4-635430ce24f4",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Inventory Upload",
@@ -1455,7 +1706,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1502,7 +1752,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1549,7 +1798,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1596,7 +1844,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1638,7 +1885,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1681,7 +1927,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d0f290d3-f3c1-49b5-ba5e-967af2ef5d07",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1691,15 +1936,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "46a688cb-a72a-4e9b-a9eb-1f23f59c86ba",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User identity",
@@ -1710,7 +1953,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1752,7 +1994,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1794,7 +2035,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1841,7 +2081,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1884,7 +2123,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -1927,7 +2165,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "12e817a3-5bc8-45f8-9708-eac6a7d48aea",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1937,15 +2174,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "54c3bbed-460d-47c2-a733-72e4962676a8",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Collection",
@@ -1956,7 +2191,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2000,7 +2234,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2049,7 +2282,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2094,7 +2326,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2143,7 +2374,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2192,7 +2422,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2237,7 +2466,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2295,7 +2523,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2346,7 +2573,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2399,7 +2625,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2452,7 +2677,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2497,7 +2721,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2544,7 +2767,7 @@
 							"query": [
 								{
 									"key": "value}",
-									"value": null
+									"value": ""
 								}
 							]
 						},
@@ -2558,7 +2781,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2602,7 +2824,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "8f318760-6386-44db-8aec-a9ee1559f23e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -2612,15 +2833,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6677de9a-c742-4000-a9ae-af3d7a8c3cc9",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Wantlist",
@@ -2631,7 +2850,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2674,7 +2892,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2723,7 +2940,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2772,7 +2988,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0f194711-ec15-47fe-b647-58673517ba2f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -2782,15 +2997,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "109e7ea0-29fc-4bfc-9c89-eaf4f9346a71",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Lists",
@@ -2801,7 +3014,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2844,7 +3056,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e6c9eeb-a6e7-4edc-9e15-ef801f3c5cbf",
 								"exec": [
 									""
 								],
@@ -2886,7 +3097,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "dd86cb37-83bd-4b83-a467-71d02f8c2634",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -2896,15 +3106,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "eb7fb672-1450-4fb1-a339-b1f3a2998308",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -2966,7 +3174,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "dddb7f7d-1885-4b0c-89a3-bed704dfd753",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -2976,13 +3183,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0bbbaf35-766b-4c94-99ea-7cc979cc16dd",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
